@@ -16,4 +16,7 @@ function getHumanChoice(){
         alert('Invalid input')
     }
 }
-console.log(getHumanChoice())
+
+humanScore = 0
+computerScore = 0
+
