@@ -5,7 +5,9 @@ const buttonContainer = document.querySelector(".buttonContainer")
  const fetchResult = document.querySelector(".fetchResult")
  const showError = document.querySelector(".showError")
 
-let confirmPlayGame = confirm("Do you want to play (Rock, Paper, Scissors?)")
+let confirmPlayGame = confirm(`Do you want to play Rock, Paper, Scissors?
+
+Click "OK" to start game`)
 if(confirmPlayGame){
  let humanScore = 0;
 let computerScore = 0;
