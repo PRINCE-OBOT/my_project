@@ -1,6 +1,6 @@
 let humanScore = 0;
 let computerScore = 0;
-
+let ome = 2
 if(confirm(`Do you want to play (Rock, Paper, Scissors)
 
 Click "OK" to start game`)){
