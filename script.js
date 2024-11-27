@@ -4,6 +4,8 @@ const displayResult = document.querySelector(".displayResult")
  let humanScore = 0;
 let computerScore = 0;
 
+let numberOfPlay = 0;
+
 buttons.forEach((btn)=>{
   btn.addEventListener("click", (e)=>{
     function getComputerChoice(){
@@ -27,8 +29,6 @@ return choices[randomIndex]
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 You win! ${humanChoice} beat ${computerChoice}<br>
-Human Score: ${humanScore}<br>
-Computer Score : ${computerScore}
 `
    }
    else if(computerChoice === "rock" && humanChoice === "scissors" || computerChoice === "paper" && humanChoice === "rock" || computerChoice === "scissors" && humanChoice === "paper"){
@@ -37,8 +37,6 @@ Computer Score : ${computerScore}
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 You lose! ${computerChoice} beat ${humanChoice}<br>
-Human Score: ${humanScore}<br>
-Computer Score : ${computerScore}
 `
    }
    else if(humanChoice === computerChoice){
@@ -46,8 +44,6 @@ Computer Score : ${computerScore}
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 - Draw - <br>
-Human Score: ${humanScore}<br>
-Computer Score : ${computerScore}
 `
    }
  }
@@ -57,5 +53,29 @@ Computer Score : ${computerScore}
  
  
  playRound(humanSelection, computerSelection)
+ 
+ if(e.target){
+   numberOfPlay++
+   if(numberOfPlay === 5){
+      function announceResult(){
+  if(humanScore > computerScore){alert(`
+  Human Win
+  Human Score : ${humanScore}
+  computer Score : ${computerScore}`)}
+else if(humanScore < computerScore){
+  alert(`
+  Computer Win
+  Human Score : ${humanScore}
+  computer Score : ${computerScore}`)}
+else if(humanScore === computerScore){
+  alert(`
+  It's a Draw game
+  Human Score : ${humanScore}
+  computer Score : ${computerScore}`)}
+}
+announceResult()
+     }
+    }
   })
 })
+
