@@ -1,7 +1,6 @@
-const buttons = document.querySelectorAll(".btn")
+
 const displayResult = document.querySelector(".displayResult")
 const container = document.querySelector(".container")
-const buttonContainer = document.querySelector(".buttonContainer")
  const fetchResult = document.querySelector(".fetchResult")
  const showError = document.querySelector(".showError")
 
@@ -13,10 +12,10 @@ if(confirmPlayGame){
 let computerScore = 0;
 
 let numberOfPlay = 0;
+let checkNumOfPlay = true;
 
-buttons.forEach((btn)=>{
-  btn.addEventListener("click", (e)=>{
-    e.stopPropagation()
+  container.addEventListener("click", (e)=>{
+    
     function getComputerChoice(){
 const choices = ["rock", "paper", "scissors"]
 const randomIndex = Math.floor(Math.random()*choices.length)
@@ -24,11 +23,15 @@ return choices[randomIndex]
  }
  
  function getHumanChoice(){
-   let enterChoice = e.target.textContent
-   
-   let userChoice = enterChoice.toLowerCase()
-   
+   let userChoice = e.target.id
+  
+   if(e.target && checkNumOfPlay){
+     if(numberOfPlay === 5){
+       checkNumOfPlay = false
+     } else {
    return userChoice
+      }
+     }
     }
     
      function playRound(humanChoice, computerChoice){
@@ -56,11 +59,16 @@ Computer Choice : ${computerChoice}<br>
 `
    }
    displayResult.style.cssText = `
-   color:brown;
-   opacity : 0.6;
-   font-style: italic;
+   color:black;
+   opacity : 0.7;
+   padding:10px;
    font-weight: bold;
-   font-size: 14px;`
+   font-size: 14px;
+   display:flex;
+   justify-content:center;
+   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+   border-radius:10px;
+   text-align:center`
  }
  let computerSelection = getComputerChoice();
  
@@ -73,15 +81,13 @@ Computer Choice : ${computerChoice}<br>
    numberOfPlay++
    if(numberOfPlay === 5){
      setTimeout(()=>{
-     container.remove()
-     displayResult.textContent = ""
      
      fetchResult.textContent = "Fetching result..."
      fetchResult.style.cssText = `
         opacity :0.4 ;
         font-weight: bold;
         `
-     }, 500)
+     }, 1000)
   setTimeout(()=>{
    function announceResult(){
   if(humanScore > computerScore){alert(`
@@ -103,13 +109,12 @@ announceResult()
 
 fetchResult.textContent = "Game end"
 fetchResult.style.cssText = `
-opacity :0.8 ;
+opacity :0.4 ;
 font-weight: bold;
 `
-  }, 2000)
+  }, 3000)
      }
     }
-  })
 })
 }
 else{
