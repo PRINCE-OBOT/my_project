@@ -1,13 +1,26 @@
 
 const displayResult = document.querySelector(".displayResult")
 const container = document.querySelector(".container")
+const askUserBox = document.querySelector(".askUserBox")
+const askUser = document.querySelector(".askUser")
+const code = document.querySelector("code")
+const relativeContainer = document.querySelector(".relativeContainer")
  const fetchResult = document.querySelector(".fetchResult")
  const showError = document.querySelector(".showError")
 
-let confirmPlayGame = confirm(`Do you want to play Rock, Paper, Scissors?
+askUserBox.addEventListener("click", (e)=>{
+  if(e.target.textContent === "Yes"){
+    relativeContainer.removeChild(askUser)
+  }
+  else if(e.target.textContent === "Cancel"){
+    relativeContainer.remove()
+    code.style.cssText =`
+    color:grey;
+    opacity:1;
+    padding:10px;`
+  }
+})
 
-Click "OK" to start game`)
-if(confirmPlayGame){
  let humanScore = 0;
 let computerScore = 0;
 
@@ -116,8 +129,4 @@ font-weight: bold;
      }
     }
 })
-}
-else{
-  container.remove()
-  showError.style.cssText = "opacity: 1"
-}
+
