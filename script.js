@@ -1,26 +1,30 @@
 
 const displayResult = document.querySelector(".displayResult")
 const container = document.querySelector(".container")
+const finalResult = document.querySelector(".finalResult")
 const askUserBox = document.querySelector(".askUserBox")
 const askUser = document.querySelector(".askUser")
+const playAgain = document.querySelector(".playAgain")
 const code = document.querySelector("code")
 const relativeContainer = document.querySelector(".relativeContainer")
  const fetchResult = document.querySelector(".fetchResult")
+ const showFinalResult = document.querySelector(".showFinalResult")
  const showError = document.querySelector(".showError")
 
-askUserBox.addEventListener("click", (e)=>{
-  if(e.target.textContent === "Yes"){
+askUserBox.addEventListener("click", (ask)=>{
+  if(ask.target.textContent === "Yes"){
     relativeContainer.removeChild(askUser)
   }
-  else if(e.target.textContent === "Cancel"){
+  else if(ask.target.textContent === "Cancel"){
     relativeContainer.remove()
     code.style.cssText =`
     color:grey;
     opacity:1;
     padding:10px;`
   }
-})
 
+if(ask.target.textContent === "Yes"){runEntireGame()}
+function runEntireGame(){
  let humanScore = 0;
 let computerScore = 0;
 
@@ -78,10 +82,12 @@ Computer Choice : ${computerChoice}<br>
    font-weight: bold;
    font-size: 14px;
    display:flex;
-   justify-content:center;
+   align-item:center;
    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
    border-radius:10px;
-   text-align:center`
+   text-align:center;
+   width: 220px;
+   height:105px;`
  }
  let computerSelection = getComputerChoice();
  
@@ -103,20 +109,33 @@ Computer Choice : ${computerChoice}<br>
      }, 1000)
   setTimeout(()=>{
    function announceResult(){
-  if(humanScore > computerScore){alert(`
-  Human Win
-  Human Score : ${humanScore}
-  computer Score : ${computerScore}`)}
+  if(humanScore > computerScore){ showFinalResult.innerHTML = `
+  Human Win &#128176; <br>
+  Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
+`
+ 
+  finalResult.style.cssText = `z-index : 2;`
+    
+  }
 else if(humanScore < computerScore){
-  alert(`
-  Computer Win
-  Human Score : ${humanScore}
-  computer Score : ${computerScore}`)}
+  showFinalResult.innerHTML = `
+  You lose &#128165;<br>
+  Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
+ `
+  finalResult.style.cssText = `z-index : 2;`
+}
 else if(humanScore === computerScore){
-  alert(`
-  It's a Draw game
-  Human Score : ${humanScore}
-  computer Score : ${computerScore}`)}
+  
+  showFinalResult.innerHTML = `
+  It's a Draw game &#x1F579;<br>
+  Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
+  `
+ 
+  finalResult.style.cssText = `z-index : 2;`
+  }
 }
 announceResult()  
 
@@ -125,8 +144,17 @@ fetchResult.style.cssText = `
 opacity :0.4 ;
 font-weight: bold;
 `
-  }, 3000)
+  }, 4000)
      }
     }
 })
+}
+playAgain.addEventListener("click", ()=>{
+  finalResult.style.cssText = `z-index : 0`
+  fetchResult.textContent = ""
+  displayResult.textContent = ""
+  displayResult.style.cssText = `box-shadow: none`
+  runEntireGame()
+})
 
+})
