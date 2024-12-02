@@ -50,6 +50,10 @@ return choices[randomIndex]
        }
       }
      }
+     else{
+      
+       displayResult.innerHTML = 'You\'re not clicking | ROCK, PAPER, SCISSORS | choices &#128580;';
+     }
     }
     
      function playRound(humanChoice, computerChoice){
