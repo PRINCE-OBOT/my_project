@@ -1,4 +1,3 @@
-
 const displayResult = document.querySelector(".displayResult")
 const container = document.querySelector(".container")
 const finalResult = document.querySelector(".finalResult")
@@ -11,8 +10,12 @@ const relativeContainer = document.querySelector(".relativeContainer")
  const showFinalResult = document.querySelector(".showFinalResult")
  const showError = document.querySelector(".showError")
 
+let humanScore = 0;
+let computerScore = 0;
+
 askUserBox.addEventListener("click", (ask)=>{
   if(ask.target.textContent === "Yes"){
+    runEntireGame()
     relativeContainer.removeChild(askUser)
   }
   else if(ask.target.textContent === "Cancel"){
@@ -23,12 +26,8 @@ askUserBox.addEventListener("click", (ask)=>{
     padding:10px;`
   }
 
-if(ask.target.textContent === "Yes"){runEntireGame()}
 function runEntireGame(){
- let humanScore = 0;
-let computerScore = 0;
 
-let numberOfPlay = 0;
 let checkNumOfPlay = true;
 
   container.addEventListener("click", (e)=>{
@@ -40,19 +39,18 @@ return choices[randomIndex]
  }
  
  function getHumanChoice(){
-   if(e.target.id === "rock"  || e.target.id === "paper"  || e.target.id === "scissors"){ userChoice = e.target.id
-
-   if(userChoice && checkNumOfPlay){
-     if(numberOfPlay === 5){
+  if(humanScore === 5 || computerScore === 5){
        checkNumOfPlay = false
-     } else {
-   return userChoice
-       }
-      }
      }
-     else{
+  const allChoices = ["rock", "paper", "scissors"]
+   if(allChoices.includes(e.target.id) && checkNumOfPlay){
+     
+   return e.target.id
+     }
+     else if(e.target.className === "container"){
       
        displayResult.innerHTML = 'You\'re not clicking | ROCK, PAPER, SCISSORS | choices &#128580;';
+       return null
      }
     }
     
@@ -63,6 +61,8 @@ return choices[randomIndex]
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 You win! ${humanChoice} beat ${computerChoice}<br>
+Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
 `
    }
    else if(computerChoice === "rock" && humanChoice === "scissors" || computerChoice === "paper" && humanChoice === "rock" || computerChoice === "scissors" && humanChoice === "paper"){
@@ -71,6 +71,8 @@ You win! ${humanChoice} beat ${computerChoice}<br>
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 You lose! ${computerChoice} beat ${humanChoice}<br>
+Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
 `
    }
    else if(humanChoice === computerChoice){
@@ -78,6 +80,8 @@ You lose! ${computerChoice} beat ${humanChoice}<br>
 Human Choice : ${humanChoice}<br>
 Computer Choice : ${computerChoice}<br>
 - Draw - <br>
+Human Score : ${humanScore} <br>
+  computer Score : ${computerScore}
 `
    }
    displayResult.style.cssText = `
@@ -92,18 +96,18 @@ Computer Choice : ${computerChoice}<br>
    border-radius:10px;
    text-align:center;
    width: 220px;
-   height:105px;`
+   height:125px;`
  }
  let computerSelection = getComputerChoice();
  
  let humanSelection = getHumanChoice()
+ if(!humanSelection)return
  
- 
- playRound(humanSelection, computerSelection)
+ if(computerSelection && computerSelection){
+ playRound(humanSelection, computerSelection)}
  
  if(e.target.id === "rock" || e.target.id === "paper" || e.target.id === "scissors"){
-   numberOfPlay++
-   if(numberOfPlay === 5){
+   if(humanScore === 5 || computerScore === 5){
      setTimeout(()=>{
      
      fetchResult.textContent = "Fetching result..."
@@ -115,9 +119,7 @@ Computer Choice : ${computerChoice}<br>
   setTimeout(()=>{
    function announceResult(){
   if(humanScore > computerScore){ showFinalResult.innerHTML = `
-  Human Win &#128176; <br>
-  Human Score : ${humanScore} <br>
-  computer Score : ${computerScore}
+  Human Win &#128176; 
 `
  
   finalResult.style.cssText = `z-index : 2;`
@@ -125,18 +127,14 @@ Computer Choice : ${computerChoice}<br>
   }
 else if(humanScore < computerScore){
   showFinalResult.innerHTML = `
-  You lose &#128165;<br>
-  Human Score : ${humanScore} <br>
-  computer Score : ${computerScore}
+  You lose &#128165;
  `
   finalResult.style.cssText = `z-index : 2;`
 }
 else if(humanScore === computerScore){
   
   showFinalResult.innerHTML = `
-  It's a Draw game &#x1F579;<br>
-  Human Score : ${humanScore} <br>
-  computer Score : ${computerScore}
+  It's a Draw game &#x1F579;
   `
  
   finalResult.style.cssText = `z-index : 2;`
@@ -155,10 +153,13 @@ font-weight: bold;
 })
 }
 playAgain.addEventListener("click", ()=>{
+  humanScore = 0;
+  computerScore = 0;
   finalResult.style.cssText = `z-index : 0`
   fetchResult.textContent = ""
   displayResult.textContent = ""
   displayResult.style.cssText = `box-shadow: none`
+
   runEntireGame()
 })
 
