@@ -40,13 +40,14 @@ return choices[randomIndex]
  }
  
  function getHumanChoice(){
-   let userChoice = e.target.id
-  
-   if(e.target && checkNumOfPlay){
+   if(e.target.id === "rock"  || e.target.id === "paper"  || e.target.id === "scissors"){ userChoice = e.target.id
+
+   if(userChoice && checkNumOfPlay){
      if(numberOfPlay === 5){
        checkNumOfPlay = false
      } else {
    return userChoice
+       }
       }
      }
     }
@@ -96,7 +97,7 @@ Computer Choice : ${computerChoice}<br>
  
  playRound(humanSelection, computerSelection)
  
- if(e.target){
+ if(e.target.id === "rock" || e.target.id === "paper" || e.target.id === "scissors"){
    numberOfPlay++
    if(numberOfPlay === 5){
      setTimeout(()=>{
